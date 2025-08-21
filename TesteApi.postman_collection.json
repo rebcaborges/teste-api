@@ -1,0 +1,360 @@
+{
+	"info": {
+		"_postman_id": "af08ffe8-b20c-4436-89c9-f1f90a9386ba",
+		"name": "TesteDeApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11519257"
+	},
+	"item": [
+		{
+			"name": "Listar Usuarios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar Usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Cadastro Realizado com Sucesso\", function () {",
+							"    const resposta = pm.response.json();",
+							"    pm.expect(resposta.message).to.eql(\"Cadastro realizado com sucesso\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Usuario Teste3\",\n  \"email\": \"teste3@teste.com.br\",\n  \"password\": \"teste\",\n  \"administrador\": \"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar Usuario Email Ja Existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Este email já está sendo usado\", function () {",
+							"    const resposta = pm.response.json();",
+							"    pm.expect(resposta.message).to.eql(\"Este email já está sendo usado\")",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Usuario Teste\",\n  \"email\": \"teste@teste.com.br\",\n  \"password\": \"teste\",\n  \"administrador\": \"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Usuario Por Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Usuario Encontrado com Sucesso\", function () {",
+							"    const resposta = pm.response.json();",
+							"    pm.expect(resposta).to.have.property('nome');",
+							"    pm.expect(resposta).to.have.property('email');",
+							"    pm.expect(resposta).to.have.property('password');",
+							"    pm.expect(resposta).to.have.property('administrador');",
+							"    pm.expect(resposta).to.have.property('_id');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios/:_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios",
+						":_id"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "aMwOsojPD9EJElRY",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "_id",
+							"value": "aMwOsojPD9EJElRY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Usuario Nao Encontrado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Usuário não encontrado\", function () {",
+							"    const resposta = pm.response.json();",
+							"    pm.expect(resposta.message).to.eql('Usuário não encontrado');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios/:_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios",
+						":_id"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "aMwOsojPD9EJElRY",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "_id",
+							"value": "asdfasdf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Excluir Usuario\", function () {",
+							"    const resposta = pm.response.json();",
+							"    pm.expect(resposta).to.have.property('message');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios/:_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios",
+						":_id"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "aMwOsojPD9EJElRY",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "_id",
+							"value": "dNesOZgtckAkIt72"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Excluir Usuario\", function () {",
+							"    const resposta = pm.response.json();",
+							"    pm.expect(resposta).to.have.property('message');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Fulano da Silva\",\n  \"email\": \"beltrano2@qa.com.br\",\n  \"password\": \"teste\",\n  \"administrador\": \"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios/:_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios",
+						":_id"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "aMwOsojPD9EJElRY",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "_id",
+							"value": "dNesOZgtckAkIt72"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
